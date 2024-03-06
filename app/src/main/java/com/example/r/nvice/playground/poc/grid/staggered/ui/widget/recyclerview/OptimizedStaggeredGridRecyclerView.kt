@@ -36,8 +36,8 @@ class OptimizedStaggeredGridRecyclerView @JvmOverloads constructor(
     ): Int? {
         val viewportRect = Rect().also(viewport::getGlobalVisibleRect)
 
-        val topExitingItemPositions = findFirstVisibleItemPositions(null).toList()
-        Timber.i("topExitingItemPositions: $topExitingItemPositions")
+        val topExitingItemPositions = findFirstVisibleItemPositions(null)
+        Timber.i("topExitingItemPositions: ${topExitingItemPositions.contentToString()}")
 
         // finding a tallest item for sectoring criteria
         // from the top exiting items
