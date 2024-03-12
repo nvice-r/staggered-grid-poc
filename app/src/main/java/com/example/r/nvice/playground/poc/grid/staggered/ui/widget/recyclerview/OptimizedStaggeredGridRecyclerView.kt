@@ -36,6 +36,14 @@ class OptimizedStaggeredGridRecyclerView @JvmOverloads constructor(
     ): Int? {
         val viewportRect = Rect().also(viewport::getGlobalVisibleRect)
 
+        // finding candidate items
+        val candidatePositions = findFirstCompletelyVisibleItemPositions(null)
+            .filter { position ->
+                position >= 0
+            }
+            .sorted()
+            .toMutableList()
+
         val topExitingItemPositions = findFirstVisibleItemPositions(null)
         Timber.i("topExitingItemPositions: ${topExitingItemPositions.contentToString()}")
 
@@ -47,14 +55,6 @@ class OptimizedStaggeredGridRecyclerView @JvmOverloads constructor(
                 ?: 0
         }
         Timber.i("criteriaItemVisibility: $criteriaItemVisibility")
-
-        // finding candidate items
-        val candidatePositions = findFirstCompletelyVisibleItemPositions(null)
-            .filter { position ->
-                position >= 0
-            }
-            .sorted()
-            .toMutableList()
 
         if (candidatePositions.isEmpty()) {
             // no complete visible on the screen
